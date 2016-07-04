@@ -1,0 +1,14 @@
+## Interface: 60200
+## Title: Angry Boss Reminders
+## Author: Ermad
+## Version: v0.1
+## SavedVariables: AngryBossReminders_State
+## SavedVariablesPerCharacter: AngryBossReminders_Config
+## X-Curse-Packaged-Version: v0.6
+## X-Curse-Project-Name: Angry Boss Reminders
+## X-Curse-Project-ID: angry-boss-reminders
+## X-Curse-Repository-ID: wow/angry-boss-reminders/mainline
+
+embeds.xml
+Core.lua
+BossDetector.lua

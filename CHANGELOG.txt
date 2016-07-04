@@ -1,0 +1,51 @@
+v0.6
+
+* Updated for Hellfire Citadel, thanks to Magenovesky
+
+v0.5.2
+
+* Minor tooltip bugfix
+
+v0.5.1
+
+* ToC bump for 6.1
+
+v0.5
+
+* Implemented BRF bosses
+
+v0.4.2
+
+* Bug fixes
+
+v0.4.1
+
+* Fix for Butcher / Brackenspore / Tectus detection
+
+v0.4
+
+* Implemented support for Equipment Sets
+
+v0.3.1
+
+* Minor bug fix
+
+v0.3
+
+* Implemented Highmaul support
+
+v.0.2.1
+
+* Fix for switching talents with 6.0
+
+v.0.2
+
+* Updated for WoW 6.0
+
+v.0.1.1
+
+* Bug fix for characters without a specialization learned
+
+v0.1
+
+* Initial release
