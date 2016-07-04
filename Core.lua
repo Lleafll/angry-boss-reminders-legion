@@ -161,13 +161,13 @@ local function MissingButton_PreClick(button, mbutton, down)
 		else
 			button:SetAttribute("macrotext", string.format("/run LearnTalent(%d)", talentID))
 		end
-	elseif missing[1] == "glyph" then
+	--[[elseif missing[1] == "glyph" then
 		local slot, index  = missing[2], missing[3]
 		local glyphName, _, _, _, glyphID, _, _ = GetGlyphInfo(index)
 
 		button:SetAttribute("type", "glyph")
 		button:SetAttribute("glyph", glyphName)
-		button:SetAttribute("slot", ABR:GlyphNumberToID(slot))
+		button:SetAttribute("slot", ABR:GlyphNumberToID(slot))]]--
 	elseif missing[1] == "item" then
 		local slotName, itemStrirng = missing[2], missing[3]
 
@@ -182,8 +182,8 @@ local function MissingButton_OnEnter(button)
 
 	if missing[1] == "talent" then
 		text = select(2, GetTalentInfo(missing[2], missing[3], GetActiveSpecGroup()))
-	elseif missing[1] == "glyph" then
-		text = "Glyph of "..GetGlyphInfo(missing[3])
+	--[[elseif missing[1] == "glyph" then
+		text = "Glyph of "..GetGlyphInfo(missing[3])]]--
 	elseif missing[1] == "item" then
 		text = GetItemInfo(missing[3])
 	elseif missing[1] == "set" then
@@ -350,7 +350,7 @@ local function MissingButton_PostClick(button)
 	text = string.format("/run AngryBossReminders:Error('You must leave combat first')")
 	button:SetAttribute("type", "macro")
 	button:SetAttribute("macrotext", text)
-	button:SetAttribute("glyph", nil)
+	--button:SetAttribute("glyph", nil)
 	button:SetAttribute("slot", nil)
 end
 
@@ -426,8 +426,8 @@ function ABR:UpdateDisplay()
 		button:Hide()
 		if missing[1] == "talent" then
 			texture = select(3, GetTalentInfo(missing[2], missing[3], GetActiveSpecGroup()))
-		elseif missing[1] == "glyph" then
-			texture = select(4, GetGlyphInfo(missing[3]))
+		--[[elseif missing[1] == "glyph" then
+			texture = select(4, GetGlyphInfo(missing[3]))]]--
 		elseif missing[1] == "item" then
 			texture = select(10, GetItemInfo(missing[3]))
 		elseif missing[1] == "set" then
@@ -513,7 +513,7 @@ function ABR:CheckGlyphsTalentsGear()
 			end
 		end
 	
-		for n = 1, NUM_GLYPH_SLOTS do
+		--[[for n = 1, NUM_GLYPH_SLOTS do
 			local _, currentGlyphType, _, _, _, currentGlyphID = GetGlyphSocketInfo( self:GlyphNumberToID(n) )
 			local selectedGlyphID = self:GetConfig( "glyph"..n, self.journalID, specID ) or self:GetConfig( "glyph"..n, -1, specID )
 			local ignoredGlyphID = self:GetIgnore( "glyph"..n, self.journalID, specID )
@@ -534,7 +534,7 @@ function ABR:CheckGlyphsTalentsGear()
 			if selectedItem and (not currentItem or selectedItem ~= currentItem) and ignoredItem ~= selectedItem then
 				table.insert(self.missing, {"item", slotName, selectedItem })
 			end
-		end
+		end]]--
 
 		local currentSet = self:GetConfig("set", self.journalID, specID) or self:GetConfig("set", -1, specID)
 		local ignoredSet = ItemStringFromLink(self:GetIgnore( slotName, self.journalID, specID ))
@@ -548,13 +548,13 @@ function ABR:CheckGlyphsTalentsGear()
 	self:UpdateDisplay()
 end
 
-function ABR:GlyphNumberToID(number)		
+--[[function ABR:GlyphNumberToID(number)		
 	if number >= 4 then
 		return _G['GLYPH_ID_MINOR_'..(number-3)]
 	else
 		return _G['GLYPH_ID_MAJOR_'..number]
 	end
-end
+end]]--
 
 function ABR:ActivateBoss(journalID)
 	if self.journalID ~= journalID then
@@ -679,10 +679,10 @@ function ABR:IgnoreMissing(index)
 		local talentID, talentName = GetTalentInfo(missing[2], missing[3], GetActiveSpecGroup())
 		self:SetIgnore('talent'..missing[2], missing[3], self.journalID, -1)
 		name = talentName
-	elseif missing[1] == 'glyph' then
+	--[[elseif missing[1] == 'glyph' then
 		local glyphName, _, _, _, glyphID = GetGlyphInfo(missing[3])
 		self:SetIgnore('glyph'..missing[2], glyphID, self.journalID, -1)
-		name = 'Glyph of '..glyphName
+		name = 'Glyph of '..glyphName]]--
 	elseif missing[1] == 'item' then
 		self:SetIgnore(missing[2], missing[3], self.journalID, -1)
 		name = GetItemInfo(missing[3])
@@ -702,9 +702,9 @@ function ABR:SetIgnore(key, value, encounterID, specializationID)
 	
 	self.ignore[specializationID][encounterID][key] = value
 
-	if self.journalID and (encounterID == self.journalID or encounterID == -1) then
+	--[[if self.journalID and (encounterID == self.journalID or encounterID == -1) then
 		self:CheckGlyphsTalentsGear()
-	end
+	end]]--
 end
 
 function ABR:GetIgnore(key, encounterID, specializationID)
@@ -734,12 +734,12 @@ function ABR:SetConfig(key, value, encounterID, specializationID)
 	ABR:EnsureConfig(specializationID, encounterID)
 	AngryBossReminders_Config[specializationID][encounterID][key] = value
 
-	if self.journalID and (encounterID == self.journalID or encounterID == -1) then
+	--[[if self.journalID and (encounterID == self.journalID or encounterID == -1) then
 		self:CheckGlyphsTalentsGear()
-	end
+	end]]--
 end
 
-local majorGlyphOptions = nil
+--[[local majorGlyphOptions = nil
 local majorGlyphIDMap = {}
 local majorGlyphIndexMap = {}
 local function MajorGlyphOptions()
@@ -817,7 +817,7 @@ end
 
 function ABR:SetMinorGlyph(key, value, encounterID, specializationID)
 	return self:SetConfig(key, minorGlyphIndexMap[value], encounterID, specializationID)
-end
+end]]--
 
 
 local equipmentSetOptions = nil
@@ -998,7 +998,7 @@ function ABR:OnInitialize()
 		}
 	end
 	
-	local glyphSlotMap = { "Major - Top", "Major - Bottom Left", "Major - Bottom Right", "Minor - Top Right", "Minor - Top Left", "Minor - Bottom" }
+	--[[local glyphSlotMap = { "Major - Top", "Major - Bottom Left", "Major - Bottom Right", "Minor - Top Right", "Minor - Top Left", "Minor - Bottom" }
 	options.args["glyphs"] = { type = "header", order = 30, name = "Glyphs" }
 	for i = 1, NUM_GLYPH_SLOTS do
 		local key = "glyph"..i
@@ -1018,7 +1018,7 @@ function ABR:OnInitialize()
 			options.args[key].get = 'GetMajorGlyph'
 			options.args[key].set = 'SetMajorGlyph'
 		end
-	end
+	end]]--
 
 	options.args["gear"] = { type = "header", order = 40, name = "Gear" }
 
@@ -1065,8 +1065,8 @@ function ABR:OnEnable()
 	self:RegisterEvent("PLAYER_TALENT_UPDATE", "CheckGlyphsTalentsGear")
 	self:RegisterEvent("UNIT_INVENTORY_CHANGED", "CheckGlyphsTalentsGear")
 	self:RegisterEvent("EQUIPMENT_SETS_CHANGED", "ChangedEquipmentSets")
-	self:RegisterEvent("GLYPH_ADDED", "CheckGlyphsTalentsGear")
-	self:RegisterEvent("GLYPH_REMOVED", "CheckGlyphsTalentsGear")
+	--self:RegisterEvent("GLYPH_ADDED", "CheckGlyphsTalentsGear")
+	--self:RegisterEvent("GLYPH_REMOVED", "CheckGlyphsTalentsGear")
 	self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED", "ChangedSpecialization")
 	self:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED", "ChangedSpecialization")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "EnterCombat")
