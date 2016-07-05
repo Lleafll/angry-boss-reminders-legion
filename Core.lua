@@ -31,7 +31,7 @@ ABR.Instances = {
   },
   {  -- Legion dungeons
     type = "group",
-    name = "ENCOUNTER_JOURNAL_INSTANCE",
+    name = "Legion Dungeons",
     maps = {
       {  -- Blackrook Hold
         journalID = 740,
@@ -77,7 +77,7 @@ ABR.Instances = {
   },
   {  -- Timewalking
     type = "group",
-    name = "PLAYER_DIFFICULTY_TIMEWALKING",
+    name = "Timewalking Dungeons",
     maps = {
     
     }
@@ -495,7 +495,7 @@ function ABR:ShowDisplay()
 end
 
 function ABR:ActiveBossName()
-	return self.journalID and EJ_GetEncounterInfo( self.journalID ) or ""
+	return self.journalID and (type(self.journalID) == "number" and self.journalIDEJ_GetEncounterInfo( self.journalID ) or type(self.journalID) == "string" and self.journalID) or ""
 end
 
 function ABR:CheckGlyphsTalentsGear()
@@ -592,7 +592,7 @@ function ABR:CheckLocation()
     if instance.type == "group" then
       for _, dungeon in ipairs(instance.maps) do
         if playerMapID == dungeon.mapID then          
-          self:ActivateBoss(dungeon.journalID)
+          self:ActivateBoss(instance.name)
           return
         end
       end
