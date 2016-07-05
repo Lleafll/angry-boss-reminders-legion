@@ -30,9 +30,9 @@ ABR.Instances = {
     
   },
   {  -- Legion dungeons
-    type = "dungeons",
+    type = "group",
     name = "ENCOUNTER_JOURNAL_INSTANCE",
-    dungeons = {
+    maps = {
       {  -- Blackrook Hold
         journalID = 740,
         mapID = 1081
@@ -48,11 +48,39 @@ ABR.Instances = {
       {  -- Eye of Azshara
         journalID = 716,
         mapID = 1046
-      }
+      },
+      {  -- Halls of Valor
+        journalID = 721,
+        mapID = 1041
+      },
+      {  -- Neltharion's Lair
+        journalID = 767,
+        mapID = 1065
+      },
+      --{  -- Suramar Catacombs (The Arcway)
+      --  journalID = ,
+      --  mapID = 
+      --},
+      {  -- Maw of Soul
+        journalID = 727,
+        mapID = 1042
+      },
+      {  -- The Violet Hold
+        journalID = 777,
+        mapID = 1066
+      },
+      {  -- Vault of the Wardens
+        journalID = 707,
+        mapID = 1045
+      },
     },
   },
   {  -- Timewalking
+    type = "group",
+    name = "PLAYER_DIFFICULTY_TIMEWALKING",
+    maps = {
     
+    }
   },
   {  -- Dev: Dreadscar Rift
     type = "raid",
@@ -532,10 +560,6 @@ end
 end]]--
 
 function ABR:ActivateBoss(journalID)
-  -- Debug
-  print(journalID)
-  
-  
 	if self.journalID ~= journalID then
 		self.journalID = journalID
 		self:CheckGlyphsTalentsGear()
@@ -562,15 +586,11 @@ function ABR:GetPlayerPosition()
 end
 
 function ABR:CheckLocation()
-  
-  -- Debug
-  print("CheckLocation")
-  
 	local playerMapID, playerFloor, playerX, playerY = self:GetPlayerPosition()
 
 	for _, instance in ipairs(self.Instances) do
-    if instance.type == "dungeons" then
-      for _, dungeon in ipairs(instance.dungeons) do
+    if instance.type == "group" then
+      for _, dungeon in ipairs(instance.maps) do
         if playerMapID == dungeon.mapID then          
           self:ActivateBoss(dungeon.journalID)
           return
@@ -622,7 +642,7 @@ local function EditingOptions()
 		local found = false
 	
 		for index1, instance in ipairs(ABR.Instances) do
-      if instance.type == "dungeons" then
+      if instance.type == "group" then
         ret[index1*100] = _G[instance.name]
         found = true
         
@@ -964,8 +984,8 @@ function ABR:OnInitialize()
 						local index2 = currentlyEditingIndex % 100
             
             local instance = self.Instances[index1]
-            if instance.type == "dungeons" then
-              currentlyEditing = _G[instance.name]
+            if instance.type == "group" then
+              currentlyEditing = instance.name
             elseif instance.type == "raid" then
               currentlyEditing = instance.bosses[index2].journalID
             end
@@ -1115,10 +1135,6 @@ end
 
 local locationTimer = nil
 function ABR:CheckZone()
-  
-  -- Debug
-  print("CheckZone")
-  
 	local playerMapID, playerFloor, playerX, playerY = self:GetPlayerPosition()
 
 	for _, instance in ipairs(self.Instances) do
