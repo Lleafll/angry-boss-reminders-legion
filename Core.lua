@@ -164,13 +164,6 @@ local function MissingButton_PreClick(button, mbutton, down)
 		else
 			button:SetAttribute("macrotext", string.format("/run LearnTalent(%d)", talentID))
 		end
-	--[[elseif missing[1] == "glyph" then
-		local slot, index  = missing[2], missing[3]
-		local glyphName, _, _, _, glyphID, _, _ = GetGlyphInfo(index)
-
-		button:SetAttribute("type", "glyph")
-		button:SetAttribute("glyph", glyphName)
-		button:SetAttribute("slot", ABR:GlyphNumberToID(slot))]]--
 	elseif missing[1] == "item" then
 		local slotName, itemStrirng = missing[2], missing[3]
 
@@ -185,8 +178,6 @@ local function MissingButton_OnEnter(button)
 
 	if missing[1] == "talent" then
 		text = select(2, GetTalentInfo(missing[2], missing[3], GetActiveSpecGroup()))
-	--[[elseif missing[1] == "glyph" then
-		text = "Glyph of "..GetGlyphInfo(missing[3])]]--
 	elseif missing[1] == "item" then
 		text = GetItemInfo(missing[3])
 	elseif missing[1] == "set" then
@@ -429,8 +420,6 @@ function ABR:UpdateDisplay()
 		button:Hide()
 		if missing[1] == "talent" then
 			texture = select(3, GetTalentInfo(missing[2], missing[3], GetActiveSpecGroup()))
-		--[[elseif missing[1] == "glyph" then
-			texture = select(4, GetGlyphInfo(missing[3]))]]--
 		elseif missing[1] == "item" then
 			texture = select(10, GetItemInfo(missing[3]))
 		elseif missing[1] == "set" then
@@ -516,18 +505,6 @@ function ABR:CheckGlyphsTalentsGear()
         end
       end
     
-      --[[for n = 1, NUM_GLYPH_SLOTS do
-        local _, currentGlyphType, _, _, _, currentGlyphID = GetGlyphSocketInfo( self:GlyphNumberToID(n) )
-        local selectedGlyphID = self:GetConfig( "glyph"..n, self.journalID, specID ) or self:GetConfig( "glyph"..n, -1, specID )
-        local ignoredGlyphID = self:GetIgnore( "glyph"..n, self.journalID, specID )
-
-        for i = 1, GetNumGlyphs() do
-          local glyphName, glyphType, _, _, glyphID, _, _ = GetGlyphInfo(i)
-          if glyphID and glyphType == currentGlyphType and glyphID == selectedGlyphID and ignoredGlyphID ~= selectedGlyphID and currentGlyphID ~= glyphID then
-            table.insert(self.missing, {"glyph", n, i})
-          end
-        end
-      end]]--
       for _, slotName in ipairs(itemSlots) do
         local inventoryID = GetInventorySlotInfo(slotName)
         local currentItem = ItemStringFromLink(GetInventoryItemLink("player", inventoryID))
@@ -551,14 +528,6 @@ function ABR:CheckGlyphsTalentsGear()
   end
 	self:UpdateDisplay()
 end
-
---[[function ABR:GlyphNumberToID(number)		
-	if number >= 4 then
-		return _G['GLYPH_ID_MINOR_'..(number-3)]
-	else
-		return _G['GLYPH_ID_MAJOR_'..number]
-	end
-end]]--
 
 function ABR:ActivateBoss(journalID)
 	if self.journalID ~= journalID then
@@ -700,10 +669,6 @@ function ABR:IgnoreMissing(index)
 		local talentID, talentName = GetTalentInfo(missing[2], missing[3], GetActiveSpecGroup())
 		self:SetIgnore('talent'..missing[2], missing[3], self.journalID, -1)
 		name = talentName
-	--[[elseif missing[1] == 'glyph' then
-		local glyphName, _, _, _, glyphID = GetGlyphInfo(missing[3])
-		self:SetIgnore('glyph'..missing[2], glyphID, self.journalID, -1)
-		name = 'Glyph of '..glyphName]]--
 	elseif missing[1] == 'item' then
 		self:SetIgnore(missing[2], missing[3], self.journalID, -1)
 		name = GetItemInfo(missing[3])
@@ -722,10 +687,6 @@ function ABR:SetIgnore(key, value, encounterID, specializationID)
 	if not self.ignore[specializationID][encounterID] then self.ignore[specializationID][encounterID] = {} end
 	
 	self.ignore[specializationID][encounterID][key] = value
-
-	--[[if self.journalID and (encounterID == self.journalID or encounterID == -1) then
-		self:CheckGlyphsTalentsGear()
-	end]]--
 end
 
 function ABR:GetIgnore(key, encounterID, specializationID)
@@ -759,91 +720,7 @@ function ABR:SetConfig(key, value, encounterID, specializationID)
 
 	ABR:EnsureConfig(specializationID, encounterID)
 	AngryBossReminders_Config[specializationID][encounterID][key] = value
-
-	--[[if self.journalID and (encounterID == self.journalID or encounterID == -1) then
-		self:CheckGlyphsTalentsGear()
-	end]]--
 end
-
---[[local majorGlyphOptions = nil
-local majorGlyphIDMap = {}
-local majorGlyphIndexMap = {}
-local function MajorGlyphOptions()
-	if majorGlyphOptions == nil then
-		local ret = { "" }
-		local nameToGlyphIdMap = { [""] = -1 }
-		local found = false
-
-		for i = 1, GetNumGlyphs() do
-			local name, glyphType, isKnown, icon, glyphID, glyphLink, spec = GetGlyphInfo(i)
-			if glyphID and glyphType == GLYPH_TYPE_MAJOR then
-				table.insert(ret, name)
-				nameToGlyphIdMap[name] = glyphID
-				found = true
-			end
-		end
-		if found then
-			table.sort(ret)
-			majorGlyphIDMap = {}
-			majorGlyphIndexMap = {}
-			for index, name in ipairs(ret) do
-				majorGlyphIDMap[ nameToGlyphIdMap[name] ] = index
-				majorGlyphIndexMap[index] = nameToGlyphIdMap[name]
-			end
-			majorGlyphOptions = ret
-		end
-	end
-	return majorGlyphOptions or {}
-end
-
-function ABR:GetMajorGlyph(key, encounterID, specializationID)
-	local val = self:GetConfig(key, encounterID, specializationID)	
-	return majorGlyphIDMap[ val ]
-end
-
-function ABR:SetMajorGlyph(key, value, encounterID, specializationID)
-	return self:SetConfig(key, majorGlyphIndexMap[value], encounterID, specializationID)
-end
-
-local minorGlyphOptions = nil
-local minorGlyphIDMap = {}
-local minorGlyphIndexMap = {}
-local function MinorGlyphOptions()
-	if minorGlyphOptions == nil then
-		local ret = { "" }
-		local nameToGlyphIdMap = { [""] = -1 }
-		local found = false
-
-		for i = 1, GetNumGlyphs() do
-			local name, glyphType, isKnown, icon, glyphID, glyphLink, spec = GetGlyphInfo(i)
-			if glyphID and glyphType == GLYPH_TYPE_MINOR then
-				table.insert(ret, name)
-				nameToGlyphIdMap[name] = glyphID
-				found = true
-			end
-		end
-		if found then
-			table.sort(ret)
-			minorGlyphIDMap = {}
-			minorGlyphIndexMap = {}
-			for index, name in ipairs(ret) do
-				minorGlyphIDMap[ nameToGlyphIdMap[name] ] = index
-				minorGlyphIndexMap[index] = nameToGlyphIdMap[name]
-			end
-			minorGlyphOptions = ret
-		end
-	end
-	return minorGlyphOptions or {}
-end
-
-function ABR:GetMinorGlyph(key, encounterID, specializationID)
-	local val = self:GetConfig(key, encounterID, specializationID)	
-	return minorGlyphIDMap[ val ]
-end
-
-function ABR:SetMinorGlyph(key, value, encounterID, specializationID)
-	return self:SetConfig(key, minorGlyphIndexMap[value], encounterID, specializationID)
-end]]--
 
 
 local equipmentSetOptions = nil
@@ -1028,28 +905,6 @@ function ABR:OnInitialize()
 			set = 'SetConfig',
 		}
 	end
-	
-	--[[local glyphSlotMap = { "Major - Top", "Major - Bottom Left", "Major - Bottom Right", "Minor - Top Right", "Minor - Top Left", "Minor - Bottom" }
-	options.args["glyphs"] = { type = "header", order = 30, name = "Glyphs" }
-	for i = 1, NUM_GLYPH_SLOTS do
-		local key = "glyph"..i
-		options.args[key] = {
-			type = "select",
-			order = 30 + i,
-			cmdHidden = true,
-			name = glyphSlotMap[i],
-			handler = self,
-		}
-		if i >= 4 then -- Minor
-			options.args[key].values = MinorGlyphOptions
-			options.args[key].get = 'GetMinorGlyph'
-			options.args[key].set = 'SetMinorGlyph'
-		else -- Minor
-			options.args[key].values = MajorGlyphOptions
-			options.args[key].get = 'GetMajorGlyph'
-			options.args[key].set = 'SetMajorGlyph'
-		end
-	end]]--
 
 	options.args["gear"] = { type = "header", order = 40, name = "Gear" }
 
