@@ -20,77 +20,52 @@ local unknownTexture = "Interface\\Icons\\INV_Misc_QuestionMark"
 local baseButtonSize = 64
 
 ABR.Instances = {
-	{ -- Hellfire Citadel
-		journalID = 669,
-		mapID = 1026,
-		bosses = {
-			{ -- Hellfire Assault
-				journalID = 1426,
-				encounterID = 1778,
-				coords = { 0.6, 0, 1, 1, 1 },
-			},
-			{ -- Iron Reaver
-				journalID = 1425,
-				encounterID = 1785,
-				coords = { 0, 0, 0.59, 1, 1 },
-			},
-			{ -- Kormrok
-				journalID = 1392,
-				encounterID = 1787,
-				coords = { 0, 0, 1, 1, 4 },
-			},
-			{ -- Hellfire High Council
-				journalID = 1432,
-				encounterID = 1798,
-				coords = { 0.60, 0.45, 1, 1, 5 },
-			},
-			{ -- Kilrogg Deadeye
-				journalID = 1396,
-				encounterID = 1786,
-				coords = { 0.24, 0, 0.57, 0.50, 5 },
-			},
-			{ -- Gorefiend
-				journalID = 1372,
-				encounterID = 1783,
-				coords = { 0, 0, 0.41, 1, 2 },
-			},
-			{ -- Shadow-Lord Iskar
-				journalID = 1433,
-				encounterID = 1788,
-				coords = { 0, 0.62, 0.55, 1, 6 },
-			},
-			{ -- Fel Lord Zakuun
-				journalID = 1391,
-				encounterID = 1777,
-				coords = { 0, 0, 0.56, 0.34, 6 },
-			},
-			{ -- Xhul'horac
-				journalID = 1447,
-				encounterID = 1800,
-				coords = { 0, 0, 1, 1, 7 },
-			},
-			{ -- Socrethar the Eternal
-				journalID = 1427,
-				encounterID = 1794,
-				coords = { 0.45, 0.42, 1, 0.64, 8 },
-			},
-			{ -- Tyrant Velhari
-				journalID = 1394,
-				encounterID = 1784,
-				coords = { 0.24, 0.46, 0.35, 0.63, 8 },
-			},
-			{ -- Mannoroth
-				journalID = 1395,
-				encounterID = 1795,
-				coords = { 0, 0, 1, 1, 9 },
-			},
-			{ -- Archimonde
-				journalID = 1438,
-				encounterID = 1799,
-				coords = { 0, 0, 1, 1, 10 },
-			},
-		}
-	},
+  {  -- The Nighthold
+    
+  },
+  {  -- The Emerald Nightmare
+    
+  },
+  {  -- Broken Isles world bosses
+    
+  },
+  {  -- Legion dungeons
+    type = "dungeons",
+    name = "ENCOUNTER_JOURNAL_INSTANCE",
+    dungeons = {
+      {  -- Blackrook Hold
+        journalID = 740,
+        mapID = 1081
+      },
+      --{  -- Court of Stars
+      --  journalID = ,
+      --  mapID = 
+      --},
+      {  -- Darkheart Thicket
+        journalID = 762,
+        mapID = 1067
+      },
+      {  -- Eye of Azshara
+        journalID = 716,
+        mapID = 1046
+      }
+    },
+  },
+  {  -- Timewalking
+    
+  },
+  {  -- Dev: Dreadscar Rift
+    type = "raid",
+    journalID = 669,
+    mapID = 1050,
+    bosses = {
+      {  -- Gakin the Darkbinder
+        journalID = 1426,
+        encounterID = 1778,
+        coords = { 0.66, 0.41, 0.67, 0.5, 0 }
+      },
+    },
+  }
 }
 
 function ABR:Error(text) self:Print( RED_FONT_COLOR_CODE.."Error:|r "..text ) end
@@ -557,6 +532,10 @@ end
 end]]--
 
 function ABR:ActivateBoss(journalID)
+  -- Debug
+  print(journalID)
+  
+  
 	if self.journalID ~= journalID then
 		self.journalID = journalID
 		self:CheckGlyphsTalentsGear()
@@ -583,20 +562,34 @@ function ABR:GetPlayerPosition()
 end
 
 function ABR:CheckLocation()
+  
+  -- Debug
+  print("CheckLocation")
+  
 	local playerMapID, playerFloor, playerX, playerY = self:GetPlayerPosition()
 
 	for _, instance in ipairs(self.Instances) do
-		if playerMapID == instance.mapID then
-			for _, boss in ipairs(instance.bosses) do
-				local x1, y1, x2, y2, floor = unpack( boss.coords )
-				if (playerFloor == nil or playerFloor == floor) and playerX >= x1 and playerY >= y1 and playerX < x2 and playerY < y2 then
-					
-					if not (BossDetection:IsBossKilled(boss.encounterID) and BossDetection:IsInLockedRaid()) then
-						self:ActivateBoss(boss.journalID)
-						return
-					end
-				end
-			end
+    if instance.type == "dungeons" then
+      for _, dungeon in ipairs(instance.dungeons) do
+        if playerMapID == dungeon.mapID then          
+          self:ActivateBoss(dungeon.journalID)
+          return
+        end
+      end
+      
+		elseif instance.type == "raid" then
+      if playerMapID == instance.mapID then
+        for _, boss in ipairs(instance.bosses) do
+          local x1, y1, x2, y2, floor = unpack( boss.coords )
+          if (playerFloor == nil or playerFloor == floor) and playerX >= x1 and playerY >= y1 and playerX < x2 and playerY < y2 then
+            if not (BossDetection:IsBossKilled(boss.encounterID) and BossDetection:IsInLockedRaid()) then
+              self:ActivateBoss(boss.journalID)
+              return
+            end
+          end
+        end
+      end
+      
 		end
 	end
 	self:DeactivateBoss()
@@ -629,10 +622,17 @@ local function EditingOptions()
 		local found = false
 	
 		for index1, instance in ipairs(ABR.Instances) do
-			for index2, boss in ipairs(instance.bosses) do
-				ret[index1*100 + index2] = EJ_GetEncounterInfo( boss.journalID )
-				found = true
-			end
+      if instance.type == "dungeons" then
+        ret[index1*100] = _G[instance.name]
+        found = true
+        
+      elseif instance.type == "raid" then
+        for index2, boss in ipairs(instance.bosses) do
+          ret[index1*100 + index2] = EJ_GetEncounterInfo( boss.journalID )
+          found = true
+        end
+        
+      end
 		end
 		if found then
 			ret[-1] = "Default"
@@ -962,8 +962,13 @@ function ABR:OnInitialize()
 					else
 						local index1 = math.floor(currentlyEditingIndex / 100)
 						local index2 = currentlyEditingIndex % 100
-
-						currentlyEditing = self.Instances[index1].bosses[index2].journalID
+            
+            local instance = self.Instances[index1]
+            if instance.type == "dungeons" then
+              currentlyEditing = _G[instance.name]
+            elseif instance.type == "raid" then
+              currentlyEditing = instance.bosses[index2].journalID
+            end
 					end
 
 					LibStub("AceConfigRegistry-3.0"):NotifyChange("AngryBossReminders")
@@ -1110,15 +1115,21 @@ end
 
 local locationTimer = nil
 function ABR:CheckZone()
+  
+  -- Debug
+  print("CheckZone")
+  
 	local playerMapID, playerFloor, playerX, playerY = self:GetPlayerPosition()
 
 	for _, instance in ipairs(self.Instances) do
-		if playerMapID == instance.mapID then
-			if not locationTimer then
-				locationTimer = self:ScheduleRepeatingTimer("CheckLocation", 5)
-			end
-			return
-		end
+    if instance.type == "raid" then
+      if playerMapID == instance.mapID then
+        if not locationTimer then
+          locationTimer = self:ScheduleRepeatingTimer("CheckLocation", 5)
+        end
+        return
+      end
+    end
 	end
 	if locationTimer then
 		self:CancelTimer(locationTimer)
