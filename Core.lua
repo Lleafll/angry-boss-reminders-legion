@@ -502,52 +502,53 @@ function ABR:CheckGlyphsTalentsGear()
 	wipe(self.missing)
 	if self.journalID then
 		local specID = GetSpecializationInfo( GetSpecialization() or 1 )
+    if specID then
+      for tier = 1, NUM_TALENT_TIERS do
+        local selectedTalent = self:GetConfig( "talent"..tier, self.journalID, specID ) or self:GetConfig( "talent"..tier, -1, specID )
+        local ignoredTalent = self:GetIgnore( "talent"..tier, self.journalID, specID )
 
-		for tier = 1, NUM_TALENT_TIERS do
-			local selectedTalent = self:GetConfig( "talent"..tier, self.journalID, specID ) or self:GetConfig( "talent"..tier, -1, specID )
-			local ignoredTalent = self:GetIgnore( "talent"..tier, self.journalID, specID )
+        if selectedTalent and ignoredTalent ~= selectedTalent then
+          local talentID, name, texture, selected, available = GetTalentInfo(tier, selectedTalent, GetActiveSpecGroup())
 
-			if selectedTalent and ignoredTalent ~= selectedTalent then
-				local talentID, name, texture, selected, available = GetTalentInfo(tier, selectedTalent, GetActiveSpecGroup())
+          if not selected then
+            table.insert(self.missing, {"talent", tier, selectedTalent})
+          end
+        end
+      end
+    
+      --[[for n = 1, NUM_GLYPH_SLOTS do
+        local _, currentGlyphType, _, _, _, currentGlyphID = GetGlyphSocketInfo( self:GlyphNumberToID(n) )
+        local selectedGlyphID = self:GetConfig( "glyph"..n, self.journalID, specID ) or self:GetConfig( "glyph"..n, -1, specID )
+        local ignoredGlyphID = self:GetIgnore( "glyph"..n, self.journalID, specID )
 
-				if not selected then
-					table.insert(self.missing, {"talent", tier, selectedTalent})
-				end
-			end
-		end
-	
-		--[[for n = 1, NUM_GLYPH_SLOTS do
-			local _, currentGlyphType, _, _, _, currentGlyphID = GetGlyphSocketInfo( self:GlyphNumberToID(n) )
-			local selectedGlyphID = self:GetConfig( "glyph"..n, self.journalID, specID ) or self:GetConfig( "glyph"..n, -1, specID )
-			local ignoredGlyphID = self:GetIgnore( "glyph"..n, self.journalID, specID )
+        for i = 1, GetNumGlyphs() do
+          local glyphName, glyphType, _, _, glyphID, _, _ = GetGlyphInfo(i)
+          if glyphID and glyphType == currentGlyphType and glyphID == selectedGlyphID and ignoredGlyphID ~= selectedGlyphID and currentGlyphID ~= glyphID then
+            table.insert(self.missing, {"glyph", n, i})
+          end
+        end
+      end]]--
+      for _, slotName in ipairs(itemSlots) do
+        local inventoryID = GetInventorySlotInfo(slotName)
+        local currentItem = ItemStringFromLink(GetInventoryItemLink("player", inventoryID))
+        local selectedItem = ItemStringFromLink(self:GetConfig( slotName, self.journalID, specID ) or self:GetConfig( slotName, -1, specID ))
+        local ignoredItem = ItemStringFromLink(self:GetIgnore( slotName, self.journalID, specID ))
+        
+        if selectedItem and (not currentItem or selectedItem ~= currentItem) and ignoredItem ~= selectedItem then
+          table.insert(self.missing, {"item", slotName, selectedItem })
+        end
+      end
 
-			for i = 1, GetNumGlyphs() do
-				local glyphName, glyphType, _, _, glyphID, _, _ = GetGlyphInfo(i)
-				if glyphID and glyphType == currentGlyphType and glyphID == selectedGlyphID and ignoredGlyphID ~= selectedGlyphID and currentGlyphID ~= glyphID then
-					table.insert(self.missing, {"glyph", n, i})
-				end
-			end
-		end
-		for _, slotName in ipairs(itemSlots) do
-			local inventoryID = GetInventorySlotInfo(slotName)
-			local currentItem = ItemStringFromLink(GetInventoryItemLink("player", inventoryID))
-			local selectedItem = ItemStringFromLink(self:GetConfig( slotName, self.journalID, specID ) or self:GetConfig( slotName, -1, specID ))
-			local ignoredItem = ItemStringFromLink(self:GetIgnore( slotName, self.journalID, specID ))
-			
-			if selectedItem and (not currentItem or selectedItem ~= currentItem) and ignoredItem ~= selectedItem then
-				table.insert(self.missing, {"item", slotName, selectedItem })
-			end
-		end]]--
-
-		local currentSet = self:GetConfig("set", self.journalID, specID) or self:GetConfig("set", -1, specID)
-		local ignoredSet = ItemStringFromLink(self:GetIgnore( slotName, self.journalID, specID ))
-		if currentSet and ignoredSet ~= currentSet then
-			local icon, _, _, numItems, numEquipped, _, _, _ = GetEquipmentSetInfoByName(currentSet)
-			if icon and numEquipped < numItems then
-				table.insert(self.missing, {"set", currentSet })
-			end
-		end
-	end
+      local currentSet = self:GetConfig("set", self.journalID, specID) or self:GetConfig("set", -1, specID)
+      local ignoredSet = ItemStringFromLink(self:GetIgnore( slotName, self.journalID, specID ))
+      if currentSet and ignoredSet ~= currentSet then
+        local icon, _, _, numItems, numEquipped, _, _, _ = GetEquipmentSetInfoByName(currentSet)
+        if icon and numEquipped < numItems then
+          table.insert(self.missing, {"set", currentSet })
+        end
+      end
+    end
+  end
 	self:UpdateDisplay()
 end
 
@@ -728,10 +729,15 @@ function ABR:SetIgnore(key, value, encounterID, specializationID)
 end
 
 function ABR:GetIgnore(key, encounterID, specializationID)
-	if not self.ignore[specializationID] then self.ignore[specializationID] = {} end
-	if specializationID == -1 then specializationID = GetSpecializationInfo( GetSpecialization() or 1 ) end
-	if not self.ignore[specializationID][encounterID] then self.ignore[specializationID][encounterID] = {} end
-	
+	if not self.ignore[specializationID] then
+    self.ignore[specializationID] = {}
+  end
+	if specializationID == -1 then
+    specializationID = GetSpecializationInfo( GetSpecialization() or 1 )
+  end
+	if not self.ignore[specializationID][encounterID] then
+    self.ignore[specializationID][encounterID] = {}
+  end
 	return self.ignore[specializationID][encounterID][key]
 end
 
