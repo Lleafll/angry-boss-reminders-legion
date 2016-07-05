@@ -21,10 +21,103 @@ local baseButtonSize = 64
 
 ABR.Instances = {
   {  -- The Nighthold
-    
+    type = "raid",
+    journalID = 786,
+    mapID = 1088,
+    bosses = {
+      {  -- Skorpyron
+        journalID = 1706,
+        encounterID = 1849,
+        coords = { 0.27, 0.6, 0.64, 0.68, 1 }
+      },
+      --{  -- Krosus
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+      --{  -- Chronomatic Anomaly
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+      --{  -- Trilliax
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+      --{  -- Star Augur Etraeus
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+      --{  -- Gul'dan
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+      {  -- Grand Magistrix Elisandre
+        journalID = 1743,
+        encounterID = 1872,
+        coords = { 0, 0, 1, 1, 7 }
+      },
+      --{  -- Spell Blade Aluriel
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+      --{  -- High Botanist Tel'arn
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+      --{  -- Tichondrius
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+    }
   },
   {  -- The Emerald Nightmare
-    
+    type = "raid",
+    journalID = 669,
+    mapID = 1050,
+    bosses = {
+      --{  -- Nythendra
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+      --{  -- Elerethe Renferal
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+      --{  -- Il'gynoth, Heart of Corruption
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+      --{  -- Ursoc
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+      --{  -- Dragons of Nightmare
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+      --{  -- Cenarius
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+      --{  -- Xavius
+      --  journalID = ,
+      --  encounterID = ,
+      --  coords = { 0, 0, 1, 1, 0 }
+      --},
+    }
   },
   {  -- Broken Isles world bosses
     
@@ -79,7 +172,7 @@ ABR.Instances = {
     type = "group",
     name = "Timewalking Dungeons",
     maps = {
-    
+      
     }
   },
   {  -- Dev: Dreadscar Rift
@@ -484,7 +577,7 @@ function ABR:ShowDisplay()
 end
 
 function ABR:ActiveBossName()
-	return self.journalID and (type(self.journalID) == "number" and self.journalIDEJ_GetEncounterInfo( self.journalID ) or type(self.journalID) == "string" and self.journalID) or ""
+	return self.journalID and (type(self.journalID) == "number" and EJ_GetEncounterInfo( self.journalID ) or type(self.journalID) == "string" and self.journalID) or ""
 end
 
 function ABR:CheckGlyphsTalentsGear()
