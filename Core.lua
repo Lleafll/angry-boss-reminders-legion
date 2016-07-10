@@ -20,6 +20,48 @@ local unknownTexture = "Interface\\Icons\\INV_Misc_QuestionMark"
 local baseButtonSize = 64
 
 ABR.Instances = {
+  {  -- The Emerald Nightmare
+    type = "raid",
+    journalID = 768,
+    mapID = 1094,
+    bosses = {
+      {  -- Nythendra
+        journalID = 1703,
+        encounterID = 1853,
+        coords = { 0.44, 0.333, 1, 1, 1 }
+      },
+      {  -- Il'gynoth, Heart of Corruption
+        journalID = 1738,
+        encounterID = 1873,
+        coords = { 0, 0, 1, 1, 4 }
+      },
+      {  -- Elerethe Renferal
+        journalID = 1744,
+        encounterID = 1876,
+        coords = { 0, 0, 0.74, 0.84, 3 }
+      },
+      {  -- Ursoc
+        journalID = 1667,
+        encounterID = 1841,
+        coords = { 0, 0, 1, 0.6, 10 }
+      },
+      {  -- Dragons of Nightmare
+        journalID = 1704,
+        encounterID = 1854,
+        coords = { 0, 0, 1, 1, 5 }
+      },
+      {  -- Cenarius
+        journalID = 1750,
+        encounterID = 1877,
+        coords = { 0, 0, 1, 1, 8 }
+      },
+      {  -- Xavius
+        journalID = 1726,
+        encounterID = 1864,
+        coords = { 0, 0, 1, 1, 12 }
+      },
+    }
+  },
   {  -- The Nighthold
     type = "raid",
     journalID = 786,
@@ -77,51 +119,6 @@ ABR.Instances = {
       --},
     }
   },
-  {  -- The Emerald Nightmare
-    type = "raid",
-    journalID = 669,
-    mapID = 1050,
-    bosses = {
-      --{  -- Nythendra
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
-      --{  -- Elerethe Renferal
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
-      --{  -- Il'gynoth, Heart of Corruption
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
-      --{  -- Ursoc
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
-      --{  -- Dragons of Nightmare
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
-      --{  -- Cenarius
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
-      --{  -- Xavius
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
-    }
-  },
-  {  -- Broken Isles world bosses
-    
-  },
   {  -- Legion dungeons
     type = "group",
     name = "Legion Dungeons",
@@ -168,14 +165,14 @@ ABR.Instances = {
       },
     },
   },
-  {  -- Timewalking
+  --[[{  -- Timewalking
     type = "group",
     name = "Timewalking Dungeons",
     maps = {
       
     }
-  },
-  {  -- Dev: Dreadscar Rift
+  },]]--
+  --[[{  -- Dev: Dreadscar Rift
     type = "raid",
     journalID = 669,
     mapID = 1050,
@@ -186,7 +183,7 @@ ABR.Instances = {
         coords = { 0.66, 0.41, 0.67, 0.5, 0 }
       },
     },
-  }
+  }]]--
 }
 
 function ABR:Error(text) self:Print( RED_FONT_COLOR_CODE.."Error:|r "..text ) end

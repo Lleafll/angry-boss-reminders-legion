@@ -7,7 +7,7 @@ end
 local plugin = AngryBossReminders:NewModule("BossDetection", "AceEvent-3.0")
 plugin.Callbacks = plugin.Callbacks or LibStub:GetLibrary("CallbackHandler-1.0"):New(plugin)
 
-local  MYTHIC_DIFFICULTY = 16 
+local MYTHIC_DIFFICULTY = 16 
 local encounterIDOverrides = { ["Tectus, The Living Mountain"] = 1722, ["Oregorger the Devourer"] = 1696, ["Hans'gar & Franzok"] = 1693, ["Kromog, Legend of the Mountain"] = 1713 }
 local deadBosses = {}
 ABRDeadBosses = deadBosses
