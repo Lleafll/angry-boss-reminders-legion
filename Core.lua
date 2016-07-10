@@ -53,7 +53,7 @@ ABR.Instances = {
       {  -- Cenarius
         journalID = 1750,
         encounterID = 1877,
-        coords = { 0, 0, 1, 1, 8 }
+        coords = { 0, 0, 1, 0.48, 11 }
       },
       {  -- Xavius
         journalID = 1726,
