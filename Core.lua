@@ -72,51 +72,51 @@ ABR.Instances = {
         encounterID = 1849,
         coords = { 0.27, 0.6, 0.64, 0.68, 1 }
       },
+      --{  -- Chronomatic Anomaly  -- TODO: Work out coordinates
+      --  journalID = 1725,
+      --  encounterID = 1865,
+      --  coords = { 0, 0, 1, 1, 1 }
+      --},
+      --{  -- Trilliax  -- TODO: Work out coordinates
+      --  journalID = 1731,
+      --  encounterID = 1867,
+      --  coords = { 0, 0, 1, 1, 1 }
+      --},
+      --{  -- Spellblade Aluriel  -- TODO: Work out coordinates
+      --  journalID = 1751,
+      --  encounterID = 1871,
+      --  coords = { 0, 0, 1, 1, 3 }
+      --},
+      {  -- Tichondrius  -- TODO: Improve coordinates
+        journalID = 1762,
+        encounterID = 1862,
+        coords = { 0, 0, 1, 1, 5 }
+      },
       --{  -- Krosus
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
+      --  journalID = 1713,
+      --  encounterID = 1842,
+      --  coords = { 0, 0, 1, 1, 3 }
       --},
-      --{  -- Chronomatic Anomaly
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
-      --{  -- Trilliax
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
-      --{  -- Star Augur Etraeus
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
-      --{  -- Gul'dan
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
+      {  -- High Botanist Tel'arn  -- TODO: Improve coordinates
+        journalID = 1761,
+        encounterID = 1886,
+        coords = { 0, 0, 1, 1, 4 }
+      },
+      {  -- Star Augur Etraeus  -- TODO: Improve coordinates
+        journalID = 1732,
+        encounterID = 1863,
+        coords = { 0, 0, 1, 1, 6 }
+      },
       {  -- Grand Magistrix Elisandre
         journalID = 1743,
         encounterID = 1872,
         coords = { 0, 0, 1, 1, 7 }
       },
-      --{  -- Spell Blade Aluriel
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
-      --{  -- High Botanist Tel'arn
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
-      --{  -- Tichondrius
-      --  journalID = ,
-      --  encounterID = ,
-      --  coords = { 0, 0, 1, 1, 0 }
-      --},
+      {  -- Gul'dan
+        journalID = 1737,
+        encounterID = 1866,
+        coords = { 0, 0, 1, 1, 9 }
+      },
     }
   },
   {  -- Legion dungeons
