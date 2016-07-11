@@ -434,7 +434,6 @@ local function MissingButton_PostClick(button)
 	text = string.format("/run AngryBossReminders:Error('You must leave combat first')")
 	button:SetAttribute("type", "macro")
 	button:SetAttribute("macrotext", text)
-	--button:SetAttribute("glyph", nil)
 	button:SetAttribute("slot", nil)
 end
 
@@ -703,7 +702,7 @@ local function EditingOptions()
 	
 		for index1, instance in ipairs(ABR.Instances) do
       if instance.type == "group" then
-        ret[index1*100] = _G[instance.name]
+        ret[index1*100] = instance.name
         found = true
         
       elseif instance.type == "raid" then
@@ -1041,8 +1040,6 @@ function ABR:OnEnable()
 	self:RegisterEvent("PLAYER_TALENT_UPDATE", "CheckGlyphsTalentsGear")
 	self:RegisterEvent("UNIT_INVENTORY_CHANGED", "CheckGlyphsTalentsGear")
 	self:RegisterEvent("EQUIPMENT_SETS_CHANGED", "ChangedEquipmentSets")
-	--self:RegisterEvent("GLYPH_ADDED", "CheckGlyphsTalentsGear")
-	--self:RegisterEvent("GLYPH_REMOVED", "CheckGlyphsTalentsGear")
 	self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED", "ChangedSpecialization")
 	self:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED", "ChangedSpecialization")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "EnterCombat")
