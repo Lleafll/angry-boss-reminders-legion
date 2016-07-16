@@ -70,37 +70,37 @@ ABR.Instances = {
       {  -- Skorpyron
         journalID = 1706,
         encounterID = 1849,
-        coords = { 0.27, 0.6, 0.64, 0.68, 1 }
+        coords = { 0.27, 0.58, 0.35, 0.68, 1 }
       },
-      --{  -- Chronomatic Anomaly  -- TODO: Work out coordinates
-      --  journalID = 1725,
-      --  encounterID = 1865,
-      --  coords = { 0, 0, 1, 1, 1 }
-      --},
-      --{  -- Trilliax  -- TODO: Work out coordinates
-      --  journalID = 1731,
-      --  encounterID = 1867,
-      --  coords = { 0, 0, 1, 1, 1 }
-      --},
-      --{  -- Spellblade Aluriel  -- TODO: Work out coordinates
-      --  journalID = 1751,
-      --  encounterID = 1871,
-      --  coords = { 0, 0, 1, 1, 3 }
-      --},
-      {  -- Tichondrius  -- TODO: Improve coordinates
+      {  -- Chronomatic Anomaly
+        journalID = 1725,
+        encounterID = 1865,
+        coords = { 0.47, 0.26, 1, 0.58, 1 }
+      },
+      {  -- Trilliax
+        journalID = 1731,
+        encounterID = 1867,
+        coords = { 0.37, 0.13, 0.46, 0.26, 1 }
+      },
+      {  -- Spellblade Aluriel
+        journalID = 1751,
+        encounterID = 1871,
+        coords = { 0.32, 0.28, 0.43, 0.45, 3 }
+      },
+      {  -- Tichondrius
         journalID = 1762,
         encounterID = 1862,
-        coords = { 0, 0, 1, 1, 5 }
+        coords = { 0.21, 0.349, 0.48, 0.75, 5 }
       },
-      --{  -- Krosus
-      --  journalID = 1713,
-      --  encounterID = 1842,
-      --  coords = { 0, 0, 1, 1, 3 }
-      --},
-      {  -- High Botanist Tel'arn  -- TODO: Improve coordinates
+      {  -- Krosus  -- Boss is out of map bounds (pull range should reach into map)
+        journalID = 1713,
+        encounterID = 1842,
+        coords = { 0.74, 0.90, 1, 1, 3 }
+      },
+      {  -- High Botanist Tel'arn
         journalID = 1761,
         encounterID = 1886,
-        coords = { 0, 0, 1, 1, 4 }
+        coords = { 0.466, 0, 0.63, 0.6, 4 }
       },
       {  -- Star Augur Etraeus  -- TODO: Improve coordinates
         journalID = 1732,
