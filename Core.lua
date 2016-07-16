@@ -127,10 +127,10 @@ ABR.Instances = {
         journalID = 740,
         mapID = 1081
       },
-      --{  -- Court of Stars
-      --  journalID = ,
-      --  mapID = 
-      --},
+      {  -- Court of Stars
+        journalID = 800,
+        mapID = 1087
+      },
       {  -- Darkheart Thicket
         journalID = 762,
         mapID = 1067
@@ -147,10 +147,10 @@ ABR.Instances = {
         journalID = 767,
         mapID = 1065
       },
-      --{  -- Suramar Catacombs (The Arcway)
-      --  journalID = ,
-      --  mapID = 
-      --},
+      {  -- The Arcway
+        journalID = 726,
+        mapID = 1079
+      },
       {  -- Maw of Soul
         journalID = 727,
         mapID = 1042
