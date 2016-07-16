@@ -1,4 +1,4 @@
-## Interface: 60200
+## Interface: 70000
 ## Title: Angry Boss Reminders
 ## Author: Ermad
 ## Version: v0.1
