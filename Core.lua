@@ -105,7 +105,7 @@ ABR.Instances = {
       {  -- Star Augur Etraeus  -- TODO: Improve coordinates
         journalID = 1732,
         encounterID = 1863,
-        coords = { 0, 0, 1, 1, 6 }
+        coords = { 0, 0, 0.50, 0.58, 6 }
       },
       {  -- Grand Magistrix Elisandre
         journalID = 1743,
@@ -172,18 +172,6 @@ ABR.Instances = {
       
     }
   },]]--
-  --[[{  -- Dev: Dreadscar Rift
-    type = "raid",
-    journalID = 669,
-    mapID = 1050,
-    bosses = {
-      {  -- Gakin the Darkbinder
-        journalID = 1426,
-        encounterID = 1778,
-        coords = { 0.66, 0.41, 0.67, 0.5, 0 }
-      },
-    },
-  }]]--
 }
 
 function ABR:Error(text) self:Print( RED_FONT_COLOR_CODE.."Error:|r "..text ) end
