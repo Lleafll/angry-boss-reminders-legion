@@ -165,13 +165,42 @@ ABR.Instances = {
       },
     },
   },
-  --[[{  -- Timewalking
+  {  -- Outland Timewalking
     type = "group",
-    name = "Timewalking Dungeons",
+    name = "Outland Timewalking Dungeons",
     maps = {
-      
+      {  -- The Arcatraz
+        journalID = 254,
+        mapID = 731
+      },
+      {  -- The Black Morass
+        journalID = 255,
+        mapID = 733
+      },
+      {  -- Mana-Tombs
+        journalID = 250,
+        mapID = 732
+      },
+      {  -- The Shattered Halls
+        journalID = 259,
+        mapID = 710
+      },
+      {  -- Slave Pens
+        journalID = 260,
+        mapID = 728
+      },
+      {  -- Magister's Terrace
+        journalID = 249,
+        mapID = 798
+      },
     }
-  },]]--
+  },
+  {  -- Northrend Timewalking
+    type = "group",
+    name = "Northrend Timewalking Dungeons",
+    maps = {
+    }
+  }
 }
 
 function ABR:Error(text) self:Print( RED_FONT_COLOR_CODE.."Error:|r "..text ) end
