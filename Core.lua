@@ -199,6 +199,30 @@ ABR.Instances = {
     type = "group",
     name = "Northrend Timewalking Dungeons",
     maps = {
+      {  -- Ahn'kahet: The Old Kingdom
+        journalID = 271,
+        mapID = 522
+      },
+      {  -- Grundrak
+        journalID = 274,
+        mapID = 530
+      },
+      {  -- Halls of Lightning
+        journalID = 275,
+        mapID = 525
+      },
+      {  -- The Nexus
+        journalID = 281,
+        mapID = 520
+      },
+      {  -- Utgarde Pinnacle
+        journalID = 286,
+        mapID = 523
+      },
+      {  -- Pit of Saron
+        journalID = 278,
+        mapID = 602
+      },
     }
   }
 }
